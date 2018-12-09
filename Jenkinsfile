@@ -1,6 +1,6 @@
 pipeline {
     environment {
-      DOCKER = credentials('docker-hub')
+    // env
     }
   agent any
   stages {
