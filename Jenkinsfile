@@ -1,8 +1,22 @@
 pipeline {
   agent {
-    label 'docker'
+    node {
+      label 'docker'
+    }
   }
   stages {
+    stage ('Checkout Code') {
+      steps {
+        checkout scm
+      }
+    }
+    stage ('Verify Tools'){
+    steps {
+      parallel (
+        docker: { sh "docker -v" }
+      )
+    }
+   }
 // Building your Test Images
     stage('BUILD') {
       parallel {
