@@ -16,3 +16,9 @@ Usage
 ---
 
 `npm start`
+
+Custom docker Install
+---
+docker-compose up -d - Start your project and it will be available at http://<host-name>:3000.
+
+docker-compose run --rm boilerplate /bin/bash for access the container.
