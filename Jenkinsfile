@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    label 'docker'
+  }
   stages {
 // Building your Test Images
     stage('BUILD') {
@@ -11,7 +13,7 @@ pipeline {
         }
         stage('Emoji Search') {
           steps {
-            sh 'docker-compose up -d'
+            sh 'docker-compose up -d .'
           }
         }
         stage('Test-Unit Image') {
