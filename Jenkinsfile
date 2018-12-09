@@ -34,11 +34,8 @@ pipeline {
       parallel {
         stage('Mocha Tests') {
           steps {
-            sh 'docker run --name nodeapp-dev --network="bridge" -d \
-            -p 9000:9000 nodeapp-dev'
-            sh 'docker run --name test-image -v $PWD:/JUnit --network="bridge" \
-            --link=nodeapp-dev -d -p 3010:3000 \
-            test-image:latest'
+            sh 'docker run --name nodeapp-dev --network="boilerplate" -d \
+            -p 3009:3000 manishmore14/emoji-search:1.0'
           }
         }
         stage('Quality Tests') {
@@ -67,9 +64,7 @@ pipeline {
             steps {
                     retry(3) {
                         timeout(time:10, unit: 'MINUTES') {
-                            sh 'docker tag nodeapp-dev:trunk <DockerHub Username>/nodeapp-prod:latest'
-                            sh 'docker push <DockerHub Username>/nodeapp-prod:latest'
-                            sh 'docker save <DockerHub Username>/nodeapp-prod:latest | gzip > nodeapp-prod-golden.tar.gz'
+                         echo "unit TEST"
                         }
                     }
 
@@ -86,9 +81,7 @@ pipeline {
 // JUnit reports and artifacts saving
     stage('REPORTS') {
       steps {
-        junit 'reports.xml'
-        archiveArtifacts(artifacts: 'reports.xml', allowEmptyArchive: true)
-        archiveArtifacts(artifacts: 'nodeapp-prod-golden.tar.gz', allowEmptyArchive: true)
+         echo "REPORTS"
       }
     }
 // Doing containers clean-up to avoid conflicts in future builds
