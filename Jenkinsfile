@@ -1,7 +1,4 @@
 pipeline {
-    environment {
-    // env
-    }
   agent any
   stages {
 // Building your Test Images
